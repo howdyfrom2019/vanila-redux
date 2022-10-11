@@ -9,13 +9,18 @@ const number = document.querySelector("span");
  * @store.dispatch: action을 줄 수 있음.
  */
 
+const ADD = "plus";
+const MINUS = "minus";
+
 const countModifier = (count = 0, action) => {
-    if (action.type === "minus") {
-        return --count;
-    } else if (action.type === "plus") {
-        return ++count;
+    switch (action.type) {
+        case ADD:
+            return ++count;
+        case MINUS:
+            return --count;
+        default:
+            return count;
     }
-    return count;
 };
 
 const countStore = legacy_createStore(countModifier);
@@ -25,8 +30,8 @@ const onChange = () => {
 }
 
 countStore.subscribe(onChange);
-plus.addEventListener("click", () => countStore.dispatch({ type: "plus" }));
-minus.addEventListener("click", () => countStore.dispatch({ type: "minus" }));
+plus.addEventListener("click", () => countStore.dispatch({ type: ADD }));
+minus.addEventListener("click", () => countStore.dispatch({ type: MINUS }));
 // let count = 0;
 // number.innerText = count;
 
