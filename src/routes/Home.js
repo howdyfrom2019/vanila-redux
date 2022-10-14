@@ -1,6 +1,9 @@
 import React, {useCallback, useState} from "react";
+import {connect} from "react-redux";
+import {actionCreators} from "../store";
 
-const Home = () => {
+const Home = ({ toDos, addToDo }) => {
+  console.log(toDos);
   const [text, setText] = useState("");
 
   const onChange = useCallback((e) => {
@@ -11,18 +14,31 @@ const Home = () => {
     e.preventDefault();
     console.log(text);
     setText("");
-  }, [text]);
+    addToDo(text);
+  }, [addToDo, text]);
 
   return (
     <>
       <h1>To Do</h1>
       <form onSubmit={onSubmit}>
-        <input type={"text"} placeholder={"Write your to-dos"} onChange={onChange} value={text || ""} />
+        <input type={"text"} placeholder={"Write your to-dos"} onChange={onChange} value={text || ""}/>
         <button>Add</button>
-        <ul />
+        <ul>
+          {toDos.map(v => <div>{JSON.stringify(v)}</div>)}
+        </ul>
       </form>
     </>
   );
 }
 
-export default Home;
+function getCurrentState(state) {
+  return { toDos: state }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addToDo: (text) => dispatch(actionCreators.addToDo(text))
+  };
+}
+
+export default connect(getCurrentState, mapDispatchToProps)(Home);
