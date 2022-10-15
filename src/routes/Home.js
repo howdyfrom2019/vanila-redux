@@ -1,6 +1,7 @@
 import React, {useCallback, useState} from "react";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {actionCreators} from "../store";
+import ToDo from "../components/ToDo";
 
 const Home = ({ toDos, addToDo }) => {
   console.log(toDos);
@@ -24,7 +25,7 @@ const Home = ({ toDos, addToDo }) => {
         <input type={"text"} placeholder={"Write your to-dos"} onChange={onChange} value={text || ""}/>
         <button>Add</button>
         <ul>
-          {toDos.map(v => <div>{JSON.stringify(v)}</div>)}
+          {toDos.map(v => <ToDo {...v} />)}
         </ul>
       </form>
     </>
