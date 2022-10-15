@@ -1,10 +1,9 @@
 import React, {useCallback, useState} from "react";
-import {connect, useSelector} from "react-redux";
+import {connect} from "react-redux";
 import {actionCreators} from "../store";
 import ToDo from "../components/ToDo";
 
 const Home = ({ toDos, addToDo }) => {
-  console.log(toDos);
   const [text, setText] = useState("");
 
   const onChange = useCallback((e) => {
@@ -13,7 +12,6 @@ const Home = ({ toDos, addToDo }) => {
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
-    console.log(text);
     setText("");
     addToDo(text);
   }, [addToDo, text]);
@@ -25,7 +23,7 @@ const Home = ({ toDos, addToDo }) => {
         <input type={"text"} placeholder={"Write your to-dos"} onChange={onChange} value={text || ""}/>
         <button>Add</button>
         <ul>
-          {toDos.map(v => <ToDo {...v} />)}
+          {toDos.map((v) => <ToDo text={v.text} id={v.id} key={v.id} />)}
         </ul>
       </form>
     </>
