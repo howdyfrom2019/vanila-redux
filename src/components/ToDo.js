@@ -1,14 +1,14 @@
 import React, {useCallback} from "react";
 import { useDispatch } from "react-redux";
-import {actionCreators} from "../store";
 import {Link} from "react-router-dom";
+import {remove} from "../store";
 
 const ToDo = ({ text, id }) => {
   const dispatch = useDispatch();
 
   const onBtnClick = useCallback((e) => {
     e.preventDefault();
-    dispatch(actionCreators.deleteToDo(id));
+    dispatch(remove(id));
   }, [dispatch, id]);
   return (
     <li>
